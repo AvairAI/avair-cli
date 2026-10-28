@@ -1,0 +1,52 @@
+{
+  "name": "@avair/cli",
+  "version": "0.2.2",
+  "description": "Command-line access to Avair campaigns, tasks, playbooks and tools",
+  "license": "MIT",
+  "homepage": "https://www.avair.ai/resources/cli",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AvairAI/avair-cli.git"
+  },
+  "bugs": {
+    "url": "https://github.com/AvairAI/avair-cli/issues"
+  },
+  "type": "module",
+  "bin": {
+    "avair": "dist/index.js"
+  },
+  "files": [
+    "dist",
+    "skills",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=22"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "tsup",
+    "test": "vitest run",
+    "test:release": "vitest run test/release",
+    "release:stage": "node scripts/stage-public-mirror.mjs",
+    "release:check": "node scripts/release-dry-run.mjs",
+    "generate:types": "openapi-typescript ../backend/tests/snapshots/agent_openapi_r1.json -o src/generated/agent-api.d.ts",
+    "check:types": "npm run generate:types && git diff --exit-code -- src/generated/agent-api.d.ts"
+  },
+  "dependencies": {
+    "@napi-rs/keyring": "^1.2.0",
+    "commander": "^14.0.1",
+    "picocolors": "^1.1.1"
+  },
+  "devDependencies": {
+    "@types/node": "^24.5.2",
+    "openapi-typescript": "^7.9.1",
+    "tsup": "^8.5.0",
+    "typescript": "^5.9.2",
+    "vitest": "^3.2.4"
+  }
+}
